@@ -4,6 +4,11 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { Button } from "@material-ui/core";
+import BottomNavigation from '@material-ui/core/BottomNavigation';
+import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
+import RestoreIcon from '@material-ui/icons/Restore';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,6 +37,10 @@ const useStyles = makeStyles((theme: Theme) =>
       '&:focus': {
         boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
       },
+    },
+    bottomNavigation: {
+      backgroundColor: '#faebd7',
+      width: '100%'
     }
   }),
 );
@@ -51,32 +60,48 @@ const FormComponent: React.FunctionComponent = () => {
   }, [form.input])
 
   const classes = useStyles();
+  const [value, setValue] = React.useState(0);
   return (
-    
-      <div className={classes.root}>
-        <Grid container spacing={3} justify="center">
-          <Grid item xs={6}>
-            <Paper className={classes.paper}><p>Hello! {form.name}</p></Paper>
-          </Grid>
 
+    <div className={classes.root}>
+      <Grid container spacing={3} justify="center">
+        <Grid item xs={6}>
+          <Paper className={classes.paper}><p>Hello! {form.name}</p></Paper>
         </Grid>
-        <Grid container spacing={3} justify="center">
-          <Grid item xs={4}>
-            <Paper className={classes.paper}><div>
-              <input type="text" value={form.input} onChange={form.handleInput} />
-              <p style={{ color: 'red' }}>{message}</p>
-            </div></Paper>
-          </Grid>
-          <Grid item xs={4}>
-            <Paper className={classes.paper}>
-              <Button variant="contained" className={classes.button} onClick={form.updateName}>
-                Change Name
+
+      </Grid>
+      <Grid container spacing={3} justify="center">
+        <Grid item xs={4}>
+          <Paper className={classes.paper}><div>
+            <input type="text" value={form.input} onChange={form.handleInput} />
+            <p style={{ color: 'red' }}>{message}</p>
+          </div></Paper>
+        </Grid>
+        <Grid item xs={4}>
+          <Paper className={classes.paper}>
+            <Button variant="contained" className={classes.button} onClick={form.updateName}>
+              Change Name
               </Button>
-            </Paper>
-          </Grid>
+          </Paper>
         </Grid>
-      </div>
-    
+      </Grid>
+
+
+
+      <BottomNavigation
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+        showLabels
+        className={classes.bottomNavigation}
+      >
+        <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+        <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+        <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+      </BottomNavigation>
+    </div>
+
   );
 };
 export default FormComponent;
