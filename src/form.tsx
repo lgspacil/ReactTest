@@ -9,6 +9,7 @@ import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import RestoreIcon from '@material-ui/icons/Restore';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
+import {useParams} from 'react-router';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -48,6 +49,9 @@ const useStyles = makeStyles((theme: Theme) =>
 const FormComponent: React.FunctionComponent = () => {
   const form = StoreContainer.useContainer();
 
+  // getting the params in the link with react-router
+  const { firstname, lastname } = useParams<{ firstname: string, lastname: string }>();
+
   const [message, setMessage] = useState('');
 
   // Will be called every time the input value has changed
@@ -66,6 +70,7 @@ const FormComponent: React.FunctionComponent = () => {
     <div className={classes.root}>
       <Grid container spacing={3} justify="center">
         <Grid item xs={6}>
+          <Paper className={classes.paper}><p>Link Names! {firstname} {lastname}</p></Paper>
           <Paper className={classes.paper}><p>Hello! {form.name}</p></Paper>
         </Grid>
 

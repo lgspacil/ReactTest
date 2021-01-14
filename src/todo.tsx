@@ -1,9 +1,14 @@
 import React, {useState} from "react";
 import { Square } from "./square";
 import { StoreContainer } from "./store";
+import {useLocation} from 'react-router';
 
 const TodoComponent: React.FunctionComponent = () => {
   const todo = StoreContainer.useContainer();
+
+  const location = useLocation();
+  console.log('the location information', location);
+  
 
   const [active, setActive] = useState(false);
 
