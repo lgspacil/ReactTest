@@ -2,6 +2,7 @@ import React from 'react';
 import TodoComponent from "./todo";
 import FormComponent from "./form";
 import StarWars from "./starWarsExample/StarWars";
+import MainGrid from "./MaterialUI/MainGrid";
 import { StoreContainer } from "./store"
 
 const App: React.FunctionComponent<{}> = () => (
