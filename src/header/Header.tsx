@@ -37,7 +37,7 @@ import {
     { title: `about`, path: `/about` },
   ];
   
-  const Header = () => {
+  const Header: React.FunctionComponent = () => {
     const classes = useStyles();
   
     return (

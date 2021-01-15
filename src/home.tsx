@@ -16,11 +16,18 @@ const Home = () => {
         <Map
             style="mapbox://styles/mapbox/streets-v9"
             containerStyle={{
-                height: '100vh',
-                width: '100vw'
+                height: 'calc(100vh - 52px)',
+                width: `100vw`,
             }}
         >
-            <DrawControl />
+            <DrawControl
+                // ref={(drawControl) => { this.drawControl = drawControl; }}
+                // onDrawCreate={this.onDrawCreate}
+                // onDrawUpdate={this.onDrawUpdate}
+                // onDrawModeChange={this.onDrawModeChange}
+                controls={{ trash: false, combine_features: false, uncombine_features: false, point: false, line_string: false, polygon: false }}
+                // styles={drawControlStyles()}
+            />
         </Map>
     )
 
