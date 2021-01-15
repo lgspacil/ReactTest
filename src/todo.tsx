@@ -17,7 +17,7 @@ const TodoComponent: React.FunctionComponent = () => {
   }
 
   return (
-    <div>
+    <div style={{padding: 90}}>
       <p>Add Todos</p>
       <input type="text" value={todo.item} onChange={todo.handleTodo} />
       <button onClick={todo.handleSubmit}>Add</button>

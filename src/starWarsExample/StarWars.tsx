@@ -24,6 +24,7 @@ const StarWars: React.FunctionComponent = () => {
 
   let content = (
     <React.Fragment>
+      <div style={{marginTop: 70}}/>
       <CharPicker
         side={choseSide}
         selectedChar={selectedCharacter}

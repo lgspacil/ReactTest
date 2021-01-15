@@ -1,11 +1,12 @@
 import React from 'react';
 import ReactMapboxGl from 'react-mapbox-gl';
 import DrawControl from 'react-mapbox-gl-draw';
-
-// Don't forget to import the CSS
+import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
+import MapIcons from './MapIcons';
+import './Map.css';
 
-const Home = () => {
+const MapView = () => {
 
     const Map = ReactMapboxGl({
         accessToken:
@@ -13,11 +14,11 @@ const Home = () => {
     });
 
     return (
-        <Map
+            <Map
             style="mapbox://styles/mapbox/streets-v9"
             containerStyle={{
-                height: 'calc(100vh - 52px)',
-                width: `100vw`,
+                height: '100vh',
+                width: `100%`,
             }}
         >
             <DrawControl
@@ -25,12 +26,15 @@ const Home = () => {
                 // onDrawCreate={this.onDrawCreate}
                 // onDrawUpdate={this.onDrawUpdate}
                 // onDrawModeChange={this.onDrawModeChange}
-                controls={{ trash: false, combine_features: false, uncombine_features: false, point: false, line_string: false, polygon: false }}
+                // controls={{ trash: false, combine_features: false, uncombine_features: false, point: false, line_string: false, polygon: false }}
                 // styles={drawControlStyles()}
             />
+
+            <MapIcons />
         </Map>
+        
     )
 
 }
 
-export default Home;
+export default MapView;

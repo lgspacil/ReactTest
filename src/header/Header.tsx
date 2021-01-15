@@ -37,13 +37,13 @@ import {
     { title: `about`, path: `/about` },
   ];
   
-  const Header: React.FunctionComponent = () => {
+  const Header: React.FunctionComponent = () => { 
     const classes = useStyles();
   
     return (
       <>
         <HideOnScroll>
-          <AppBar position="fixed">
+          <AppBar position="fixed" style={{backgroundColor: '#141920'}}>
             <Toolbar component="nav">
               <Container maxWidth="md" className={classes.navbarDisplayFlex}>
                 <IconButton edge="start" aria-label="home">
