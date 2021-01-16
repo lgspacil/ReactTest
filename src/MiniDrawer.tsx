@@ -21,6 +21,7 @@ import MapOutlined from "@material-ui/icons/MapOutlined";
 import ListAlt from "@material-ui/icons/ListAlt";
 import Info from "@material-ui/icons/Info";
 import FormatAlignJustify from "@material-ui/icons/FormatAlignJustify";
+import { Tooltip } from "@material-ui/core";
 
 
 const drawerWidth = 240;
@@ -109,7 +110,10 @@ const MiniDrawer: React.FunctionComponent = () => {
                         {open ? (
                             <ChevronLeftIcon />
                         ) : (
+                            <Tooltip title={'Menu'} aria-label={'menu'}>
                                 <MenuIcon />
+                            </Tooltip>
+                                
                             )}
                     </IconButton>
                 </div>
@@ -118,9 +122,11 @@ const MiniDrawer: React.FunctionComponent = () => {
                     {navLinks.map(({ title, path, icon }) => (
                         <a href={path} key={title} className={classes.linkText}>
                             <ListItem button key={title}>
+                                <Tooltip title={title} aria-label={title}>
                                 <ListItemIcon key={title}>
                                     {icon}
                                 </ListItemIcon>
+                                </Tooltip>
                                 <ListItemText primary={title} />
                             </ListItem>
                         </a>

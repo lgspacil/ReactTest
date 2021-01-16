@@ -2,8 +2,9 @@
 import React from 'react';
 import shortid from "shortid"
 import { Container, createContainer } from 'unstated-next'
-
+import { Feature, FeatureCollection } from '@turf/turf';
 import createPersistedState from 'use-persisted-state';
+
 const useInputState = createPersistedState('input');
 const useNameState = createPersistedState('name');
 const useTodosState = createPersistedState('todos');
@@ -24,6 +25,8 @@ interface IStore {
     handleTodo: (event: React.ChangeEvent<HTMLInputElement>) => void;
     handleSubmit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     clearItems: () => void;
+    addZone: (feature: Feature) => void;
+    zones: Feature[] | null;
 }
 
 export const useStore = () => {
@@ -36,6 +39,7 @@ export const useStore = () => {
     const [name, setName] = useNameState("James");
     const [todos, addTodo] = useTodosState(list);
     const [item, setTodo] = useItemState("");
+    const [zones, setZones] = useItemState<Feature[] | null>(null)
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue(event.target.value);
@@ -64,6 +68,10 @@ export const useStore = () => {
     const clearItems = () => {
         addTodo([]);
     }
+
+    const addZone = (feature: Feature) => {
+        setZones([feature])
+    }
     return {
         input,
         name,
@@ -73,7 +81,9 @@ export const useStore = () => {
         item,
         handleTodo,
         handleSubmit,
-        clearItems
+        clearItems,
+        addZone,
+        zones
     };
 }
 export const StoreContainer: Container<IStore, void> = createContainer(useStore);

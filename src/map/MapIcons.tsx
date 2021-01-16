@@ -4,6 +4,10 @@ import Fab from '@material-ui/core/Fab';
 import CropFreeSharp from '@material-ui/icons/CropFreeSharp';
 import DeleteSharp from '@material-ui/icons/DeleteSharp';
 
+interface Props {
+  drawPolygon: () => void;
+}
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     fab1: {
@@ -36,20 +40,18 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const MapIcons = () => {
+const MapIcons: React.FunctionComponent<Props> = (props: Props) => {
 
     const classes = useStyles();
 
     return (
         <div>
-            <Fab color="primary" aria-label="add" className={classes.fab1}>
-                <DeleteSharp />
+            <Fab color="primary" aria-label="add" className={classes.fab1} onClick={props.drawPolygon}>
+                  <CropFreeSharp />
+                
             </Fab>
             <Fab color="primary" aria-label="add" className={classes.fab2}>
-                <CropFreeSharp />
-            </Fab>
-            <Fab color="primary" aria-label="add" className={classes.fab3}>
-                <CropFreeSharp />
+                <DeleteSharp />
             </Fab>
         </div>
     )

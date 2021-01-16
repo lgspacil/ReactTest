@@ -8,11 +8,6 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       flexGrow: 1,
     },
-    paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-      color: theme.palette.text.secondary,
-    },
   }),
 );
 
@@ -28,7 +23,6 @@ const MainView = () => {
         <Grid item xs={4}>
           <p>side pannel</p>
         </Grid>
-        
       </Grid>
     </div>
   );
