@@ -101,46 +101,53 @@
 
 
 
-import React, { useState } from 'react';
-import MapGL from '@urbica/react-map-gl';
-import Draw from '@urbica/react-map-gl-draw';
-import 'mapbox-gl/dist/mapbox-gl.css';
-import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
+
+import React, {useState} from "react";
+import ReactMapboxGl from "react-mapbox-gl";
+import DrawControl from "react-mapbox-gl-draw";
+import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
+
+// import "./styles.css";
+import { Feature } from "@turf/turf";
+
+interface drawCreate {
+    features: Feature[];
+}
+
+const Map = ReactMapboxGl({
+  accessToken:
+    "pk.eyJ1IjoiZmFrZXVzZXJnaXRodWIiLCJhIjoiY2pwOGlneGI4MDNnaDN1c2J0eW5zb2ZiNyJ9.mALv0tCpbYUPtzT7YysA2g"
+});
 
 const MapView = () => {
 
-  const [data, setData] = useState({
-    type: 'FeatureCollection',
-    features: [
-      {
-        type: 'Feature',
-        properties: {},
-        geometry: {
-          coordinates: [-122.41411987304815, 37.792209769935084],
-          type: 'Point'
-        }
-      }
-    ]
-  });
+  const [zone, setZone] = useState<Feature | null>(null);
+
+  const onDrawCreate = ({ features }: drawCreate) => {
+    setZone(features[0]);
+    console.log('1', features[0]);
+  };
+
+  const onDrawUpdate = ({ features }: drawCreate) => {
+    console.log(features);
+  };
+
+  console.log('zone ', zone);
 
   return (
     <div>
-      <MapGL
-        style={{ width: '100%', height: '400px' }}
-        mapStyle='mapbox://styles/mapbox/light-v9'
-        accessToken={'pk.eyJ1IjoiZmFrZXVzZXJnaXRodWIiLCJhIjoiY2pwOGlneGI4MDNnaDN1c2J0eW5zb2ZiNyJ9.mALv0tCpbYUPtzT7YysA2g'}
-        latitude={37.78}
-        longitude={-122.41}
-        zoom={11}
+      <h2>Welcome to react-mapbox-gl-draw</h2>
+      <Map
+        style="mapbox://styles/mapbox/streets-v9" // eslint-disable-line
+        containerStyle={{
+          height: "600px",
+          width: "100vw"
+        }}
       >
-        <Draw data={data} onChange={(data) => setData(data)} />
-      </MapGL>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+        <DrawControl onDrawCreate={onDrawCreate} onDrawUpdate={onDrawUpdate} />
+      </Map>
     </div>
-)
-
-
-
+  );
 }
 
 export default MapView;
