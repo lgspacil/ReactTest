@@ -8,10 +8,11 @@ import {
 interface PrivateRouteProps extends RouteProps {
     component: any;
     user: boolean;
+    redirectRoute?: string;
 }
 
 const ProtectedRoute = (props: PrivateRouteProps) => {
-    const { component: Component, user, ...rest } = props;
+    const { component: Component, user, redirectRoute, ...rest } = props;
 
     console.log('the user ', user);
 

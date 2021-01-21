@@ -18,6 +18,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import StarBorder from "@material-ui/icons/StarBorder";
 import MapOutlined from "@material-ui/icons/MapOutlined";
+import HomeOutlined from "@material-ui/icons/HomeOutlined";
 import ListAlt from "@material-ui/icons/ListAlt";
 import Info from "@material-ui/icons/Info";
 import FormatAlignJustify from "@material-ui/icons/FormatAlignJustify";
@@ -75,7 +76,8 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const navLinks = [
-    { title: `Map`, path: `/`, icon: <MapOutlined /> },
+    { title: `Home`, path: `/`, icon: <HomeOutlined /> },
+    { title: `Map`, path: `/map`, icon: <MapOutlined /> },
     { title: `Star Wars`, path: `/starwars`, icon: <StarBorder /> },
     { title: `Form`, path: `/form/:firstname/:lastname`, icon: <FormatAlignJustify /> },
     { title: `To Do List`, path: `/todo`, icon: <ListAlt /> },
