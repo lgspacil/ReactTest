@@ -9,6 +9,8 @@ const useInputState = createPersistedState('input');
 const useNameState = createPersistedState('name');
 const useTodosState = createPersistedState('todos');
 const useItemState = createPersistedState('item');
+const useZoneState = createPersistedState('zone');
+const useUserState = createPersistedState('user');
 
 interface IList {
     id: string;
@@ -27,6 +29,9 @@ interface IStore {
     clearItems: () => void;
     addZone: (feature: Feature) => void;
     zones: Feature[] | null;
+    user: boolean,
+    handleLogout: (cb: any) => void;
+    handleLogin: (cb: any) => void;
 }
 
 export const useStore = () => {
@@ -39,7 +44,23 @@ export const useStore = () => {
     const [name, setName] = useNameState("James");
     const [todos, addTodo] = useTodosState(list);
     const [item, setTodo] = useItemState("");
-    const [zones, setZones] = useItemState<Feature[] | null>(null)
+    const [zones, setZones] = useZoneState<Feature[] | null>(null)
+    const [user, setUser] = useUserState(false);
+
+    const handleLogin = (cb: any) => {
+        setUser(true);
+
+        cb();
+        // navigate to a route
+        // history.push('/about');
+    }
+
+    const handleLogout = (cb: any) => {
+        setUser(false);
+
+        cb();
+        // history.push('/signin');
+    }
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         setValue(event.target.value);
@@ -83,7 +104,10 @@ export const useStore = () => {
         handleSubmit,
         clearItems,
         addZone,
-        zones
+        zones,
+        user,
+        handleLogin,
+        handleLogout
     };
 }
 export const StoreContainer: Container<IStore, void> = createContainer(useStore);

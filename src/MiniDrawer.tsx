@@ -22,7 +22,8 @@ import ListAlt from "@material-ui/icons/ListAlt";
 import Info from "@material-ui/icons/Info";
 import FormatAlignJustify from "@material-ui/icons/FormatAlignJustify";
 import { Tooltip } from "@material-ui/core";
-
+import { StoreContainer } from "./store";
+import {useHistory} from 'react-router';
 
 const drawerWidth = 240;
 
@@ -82,6 +83,8 @@ const navLinks = [
 ];
 
 const MiniDrawer: React.FunctionComponent = () => {
+    const history = useHistory();
+    const store = StoreContainer.useContainer();
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
 
@@ -136,9 +139,11 @@ const MiniDrawer: React.FunctionComponent = () => {
                 <Divider />
                 <List>
                     <ListItem button key={'Sign Out'}>
-                        <ListItemIcon>
+                        <Tooltip title={'Sign Out'} aria-label={'Sign Out'}>
+                        <ListItemIcon onClick={() => store.handleLogout(() => history.push('/signin'))}>
                             <ExitToApp />
                         </ListItemIcon>
+                        </Tooltip>
                         <ListItemText primary={'Sign Out'} />
                     </ListItem>
                 </List>
