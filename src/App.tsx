@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import ToolRouter from './routes/router';
-import MiniDrawer from './MiniDrawer';
+import MiniDrawer from './SideDrawer/MiniDrawer';
 
 
 const App: React.FunctionComponent<{}> = () => {

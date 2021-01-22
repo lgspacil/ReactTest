@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StoreContainer } from "./store";
+import { StoreContainer } from "../store";
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';

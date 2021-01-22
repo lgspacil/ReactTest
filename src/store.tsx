@@ -1,15 +1,16 @@
 // src/store.js
-import React from 'react';
+import React, { useState } from 'react';
 import shortid from "shortid"
 import { Container, createContainer } from 'unstated-next'
 import { Feature, FeatureCollection } from '@turf/turf';
+import * as turf from '@turf/turf';
 import createPersistedState from 'use-persisted-state';
 
 const useInputState = createPersistedState('input');
 const useNameState = createPersistedState('name');
 const useTodosState = createPersistedState('todos');
 const useItemState = createPersistedState('item');
-const useZoneState = createPersistedState('zone');
+const useFeatureCollection = createPersistedState('fc');
 const useUserState = createPersistedState('user');
 
 interface IList {
@@ -27,11 +28,13 @@ interface IStore {
     handleTodo: (event: React.ChangeEvent<HTMLInputElement>) => void;
     handleSubmit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     clearItems: () => void;
-    addZone: (feature: Feature) => void;
-    zones: Feature[] | null;
+    updateFeatureCollection: (fc: FeatureCollection) => void;
+    featureCollection: FeatureCollection | null;
     user: boolean,
     handleLogout: (cb: any) => void;
     handleLogin: (cb: any) => void;
+    clearFeatureCollection: () => void;
+    add: () => void;
 }
 
 export const useStore = () => {
@@ -44,22 +47,20 @@ export const useStore = () => {
     const [name, setName] = useNameState("James");
     const [todos, addTodo] = useTodosState(list);
     const [item, setTodo] = useItemState("");
-    const [zones, setZones] = useZoneState<Feature[] | null>(null)
+    const [featureCollection, setFeatureCollection] = useFeatureCollection<FeatureCollection | null>(null);
     const [user, setUser] = useUserState(false);
+    const [number, setNum] = useState(1);
 
     const handleLogin = (cb: any) => {
         setUser(true);
 
         cb();
-        // navigate to a route
-        // history.push('/about');
     }
 
     const handleLogout = (cb: any) => {
         setUser(false);
 
         cb();
-        // history.push('/signin');
     }
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,9 +91,18 @@ export const useStore = () => {
         addTodo([]);
     }
 
-    const addZone = (feature: Feature) => {
-        setZones([feature])
+    const updateFeatureCollection = (fc: FeatureCollection) => {
+        setFeatureCollection(fc)
     }
+
+    const clearFeatureCollection = () => {
+        setFeatureCollection(null);
+    }
+
+    const add = () => {
+        setNum(number + 1);
+    }
+
     return {
         input,
         name,
@@ -103,11 +113,13 @@ export const useStore = () => {
         handleTodo,
         handleSubmit,
         clearItems,
-        addZone,
-        zones,
+        updateFeatureCollection,
+        featureCollection,
         user,
         handleLogin,
-        handleLogout
+        handleLogout,
+        clearFeatureCollection,
+        add, // delete after test
     };
 }
 export const StoreContainer: Container<IStore, void> = createContainer(useStore);

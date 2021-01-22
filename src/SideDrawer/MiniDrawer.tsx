@@ -23,7 +23,7 @@ import ListAlt from "@material-ui/icons/ListAlt";
 import Info from "@material-ui/icons/Info";
 import FormatAlignJustify from "@material-ui/icons/FormatAlignJustify";
 import { Tooltip } from "@material-ui/core";
-import { StoreContainer } from "./store";
+import { StoreContainer } from "../store";
 import {useHistory} from 'react-router';
 
 const drawerWidth = 240;

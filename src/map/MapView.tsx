@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ReactMapboxGl from "react-mapbox-gl";
 import DrawControl from "react-mapbox-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import 'mapbox-gl/dist/mapbox-gl.css';
-
 // import "./styles.css";
-import { Feature, FeatureCollection } from "@turf/turf";
+import { Feature } from "@turf/turf";
 import * as turf from '@turf/turf';
 import MapIcons from "./MapIcons";
+import { StoreContainer } from "../store";
+import MapPolygons from "./MapPolygons";
+// import {drawControlStyles} from './stylePolygons';
 
 interface drawCreate {
   features: Feature[];
@@ -24,22 +26,7 @@ type DrawType = 'draw_polygon' | 'direct_select' | 'draw_line_string' | 'simple_
 
 const MapView = () => {
 
-  const [featureCollection, setFeatureCollection] = useState<FeatureCollection | null>(null);
-
-  const onDrawCreate = ({ features }: drawCreate) => {
-
-    if(!featureCollection){
-      const fc = turf.featureCollection(features);
-      setFeatureCollection(fc);
-    }else{
-      featureCollection.features.push(features[0])
-      setFeatureCollection(featureCollection);
-    }
-  };
-
-  const onDrawUpdate = ({ features }: drawCreate) => {
-    console.log(features);
-  };
+  const store = StoreContainer.useContainer();
 
   const setDrawPolygon = () => {
     const currentMode: DrawType = drawControlRef?.draw.getMode();
@@ -54,28 +41,51 @@ const MapView = () => {
     drawControlRef?.draw.changeMode('simple_select')
   }
 
+  const clearShape = () => {
+    const ids = drawControlRef?.draw.getSelectedIds();
+    drawControlRef?.draw.delete(ids);
+    updateFeatureCollection()
+  }
 
-  console.log('FEATURE COLLECTION ', featureCollection)
+  const updateFeatureCollection = () => {
+    const fc = drawControlRef?.draw.getAll();
+    store.updateFeatureCollection(fc);
+  }
+
+  const onLoadPrevShapes = () => {
+    if(store.featureCollection){
+      drawControlRef?.draw.set(store.featureCollection);
+    }
+  }
+
+  const MapPolygonsComp = useMemo(() => { return <MapPolygons fc={store.featureCollection} /> }, [store.featureCollection])
 
   return (
-      <Map
-        style="mapbox://styles/mapbox/streets-v9" // eslint-disable-line
-        containerStyle={{
-          height: '100vh',
-          width: '100%'
-        }}
-      >
-        <DrawControl
-          ref={(drawControl) => drawControlRef = drawControl}
-          onDrawCreate={onDrawCreate}
-          onDrawUpdate={onDrawUpdate}
-          controls={{ trash: false, combine_features: false, uncombine_features: false, point: false, line_string: false, polygon: false }}
-        />
+    <Map
+      onStyleLoad={() => onLoadPrevShapes()}
+      style="mapbox://styles/mapbox/streets-v11" // eslint-disable-line
+      containerStyle={{
+        height: '100vh',
+        width: '100%'
+      }}
+    >
+      <DrawControl
+        ref={(drawControl) => drawControlRef = drawControl}
+        onDrawCreate={updateFeatureCollection}
+        onDrawUpdate={updateFeatureCollection}
+        onDrawDelete={updateFeatureCollection}
+        controls={{ trash: false, combine_features: false, uncombine_features: false, point: false, line_string: false, polygon: false }}
+        // styles={drawControlStyles()}
+      />
 
-        <MapIcons
-          drawPolygon={setDrawPolygon}
-        />
-      </Map>
+      <MapIcons
+        add={() => store.add()}
+        drawPolygon={setDrawPolygon}
+        delete={clearShape}
+      />
+
+      {MapPolygonsComp}
+    </Map>
   );
 }
 

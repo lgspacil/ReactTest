@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
 import React from 'react';
-import { StoreContainer } from './store';
+import { StoreContainer } from '../store';
 import {useHistory, useLocation} from 'react-router-dom';
 
 interface LocationState {
