@@ -21,6 +21,7 @@ import MapOutlined from "@material-ui/icons/MapOutlined";
 import HomeOutlined from "@material-ui/icons/HomeOutlined";
 import ListAlt from "@material-ui/icons/ListAlt";
 import Info from "@material-ui/icons/Info";
+import TableChart from "@material-ui/icons/TableChart";
 import FormatAlignJustify from "@material-ui/icons/FormatAlignJustify";
 import { Tooltip } from "@material-ui/core";
 import { StoreContainer } from "../store";
@@ -82,6 +83,7 @@ const navLinks = [
     { title: `Form`, path: `/form/Terraclear/MapTeam`, icon: <FormatAlignJustify /> },
     { title: `To Do List`, path: `/todo`, icon: <ListAlt /> },
     { title: `about`, path: `/about`, icon: <Info /> },
+    { title: `Table`, path: `/table`, icon: <TableChart /> },
 ];
 
 const MiniDrawer: React.FunctionComponent = () => {

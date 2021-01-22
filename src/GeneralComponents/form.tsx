@@ -3,13 +3,9 @@ import { StoreContainer } from "../store";
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
-import { Button } from "@material-ui/core";
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import RestoreIcon from '@material-ui/icons/Restore';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import {useParams} from 'react-router';
+import Divider from '@material-ui/core/Divider';
+import { Button, TextField } from "@material-ui/core";
+import { useParams } from 'react-router';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -64,22 +60,28 @@ const FormComponent: React.FunctionComponent = () => {
   }, [form.input])
 
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
   return (
 
     <div className={classes.root}>
       <Grid container spacing={3} justify="center">
         <Grid item xs={6}>
-          <Paper className={classes.paper}><p>Link Names! {firstname} {lastname}</p></Paper>
-          <Paper className={classes.paper}><p>Hello! {form.name}</p></Paper>
+          <p style={{ textAlign: 'center', color: 'white' }}>Link Names! {firstname} {lastname}</p>
+          <p style={{ textAlign: 'center', color: 'white' }}>Hello! {form.name}</p>
         </Grid>
 
       </Grid>
       <Grid container spacing={3} justify="center">
         <Grid item xs={4}>
           <Paper className={classes.paper}><div>
-            <input type="text" value={form.input} onChange={form.handleInput} />
-            <p style={{ color: 'red' }}>{message}</p>
+            <TextField
+              onChange={form.handleInput}
+              value={form.input}
+              error={message !== '' ? true : false}
+              id="outlined-error-helper-text"
+              label="Name"
+              helperText={message}
+              variant="outlined"
+            />
           </div></Paper>
         </Grid>
         <Grid item xs={4}>
@@ -90,21 +92,6 @@ const FormComponent: React.FunctionComponent = () => {
           </Paper>
         </Grid>
       </Grid>
-
-
-
-      <BottomNavigation
-        value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        showLabels
-        className={classes.bottomNavigation}
-      >
-        <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
-        <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
-        <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
-      </BottomNavigation>
     </div>
 
   );

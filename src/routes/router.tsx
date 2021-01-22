@@ -9,6 +9,7 @@ import SignIn from '../GeneralComponents/SignIn';
 import ProtectedRoute from './ProtectedRoute';
 import { StoreContainer } from '../store';
 import Home from '../GeneralComponents/Home';
+import BasicTable from '../GeneralComponents/BasicTable';
 
 const ToolRouter = () => {
 
@@ -24,6 +25,7 @@ const ToolRouter = () => {
                 <ProtectedRoute exact path='/todo' user={store.user} component={TodoComponent} />
                 <ProtectedRoute exact path='/about' user={store.user} component={About} />
                 <Route exact path="/signIn" component={SignIn} />
+                <Route exact path="/table" component={BasicTable} />
             </Switch>
         </div>
     )
