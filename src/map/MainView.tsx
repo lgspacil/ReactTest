@@ -4,6 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import MapView from './MapView';
 import { ShapeContext } from '../hooks/ShapeContext';
 import SidePanelMain from './SidePanelMain';
+import SidePanelDeepLink from './SidePanelDeepLink';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,6 +31,8 @@ const MainView = () => {
           </Grid>
           <Grid item xs={4}>
             <SidePanelMain />
+
+            <SidePanelDeepLink />
           </Grid>
 
         </ShapeContext.Provider>

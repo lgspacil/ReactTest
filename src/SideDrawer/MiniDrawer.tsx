@@ -79,7 +79,7 @@ const navLinks = [
     { title: `Home`, path: `/`, icon: <HomeOutlined /> },
     { title: `Map`, path: `/map`, icon: <MapOutlined /> },
     { title: `Star Wars`, path: `/starwars`, icon: <StarBorder /> },
-    { title: `Form`, path: `/form/:firstname/:lastname`, icon: <FormatAlignJustify /> },
+    { title: `Form`, path: `/form/Terraclear/MapTeam`, icon: <FormatAlignJustify /> },
     { title: `To Do List`, path: `/todo`, icon: <ListAlt /> },
     { title: `about`, path: `/about`, icon: <Info /> },
 ];

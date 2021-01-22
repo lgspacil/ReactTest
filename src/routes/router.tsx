@@ -18,7 +18,7 @@ const ToolRouter = () => {
         <div style={{ marginLeft: 72 }}>
             <Switch>
                 <Route exact path="/" component={Home} />
-                <ProtectedRoute exact path="/map" user={store.user} component={MainView} />
+                <ProtectedRoute path="/map/:shapeId?" user={store.user} component={MainView} />
                 <Route exact path="/starwars" component={StarWars} />
                 <Route exact path="/form/:firstname/:lastname" component={FormComponent} />
                 <ProtectedRoute exact path='/todo' user={store.user} component={TodoComponent} />

@@ -32,7 +32,7 @@ import {
 
   const navLinks = [
     { title: `Star Wars`, path: `/starwars` },
-    { title: `Form`, path: `/form/:firstname/:lastname` },
+    { title: `Form`, path: `/form/Terraclear/Maps` },
     { title: `To Do List`, path: `/todo` },
     { title: `about`, path: `/about` },
   ];
