@@ -1,19 +1,13 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import ReactMapboxGl from "react-mapbox-gl";
 import DrawControl from "react-mapbox-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import 'mapbox-gl/dist/mapbox-gl.css';
-// import "./styles.css";
 import { Feature } from "@turf/turf";
-import * as turf from '@turf/turf';
 import MapIcons from "./MapIcons";
 import { StoreContainer } from "../store";
 import MapPolygons from "./MapPolygons";
-// import {drawControlStyles} from './stylePolygons';
-
-interface drawCreate {
-  features: Feature[];
-}
+import { ShapeContext } from "../hooks/ShapeContext";
 
 const Map = ReactMapboxGl({
   accessToken:
@@ -27,6 +21,8 @@ type DrawType = 'draw_polygon' | 'direct_select' | 'draw_line_string' | 'simple_
 const MapView = () => {
 
   const store = StoreContainer.useContainer();
+
+  const {setShapeId} = useContext(ShapeContext);
 
   const setDrawPolygon = () => {
     const currentMode: DrawType = drawControlRef?.draw.getMode();
@@ -58,6 +54,11 @@ const MapView = () => {
     }
   }
 
+  const fieldSelectionUpdate = () => {
+    const ids = drawControlRef?.draw.getSelectedIds();
+    setShapeId(ids[0]);
+  }
+
   const MapPolygonsComp = useMemo(() => { return <MapPolygons fc={store.featureCollection} /> }, [store.featureCollection])
 
   return (
@@ -74,8 +75,8 @@ const MapView = () => {
         onDrawCreate={updateFeatureCollection}
         onDrawUpdate={updateFeatureCollection}
         onDrawDelete={updateFeatureCollection}
+        onDrawSelectionChange={fieldSelectionUpdate}
         controls={{ trash: false, combine_features: false, uncombine_features: false, point: false, line_string: false, polygon: false }}
-        // styles={drawControlStyles()}
       />
 
       <MapIcons

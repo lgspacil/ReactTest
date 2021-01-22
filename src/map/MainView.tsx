@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState, useMemo} from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import MapView from './MapView';
+import { ShapeContext } from '../hooks/ShapeContext';
+import SidePanelMain from './SidePanelMain';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -14,15 +16,23 @@ const useStyles = makeStyles((theme: Theme) =>
 const MainView = () => {
   const classes = useStyles();
 
+  const [shapeId, setShapeId] = useState('');
+
+  const providerValue = useMemo(() => ({shapeId, setShapeId}), [shapeId, setShapeId]);
+
   return (
     <div className={classes.root}>
       <Grid container spacing={1}>
-        <Grid item xs={8}>
-          <MapView />
-        </Grid>
-        <Grid item xs={4}>
-          <p>side pannel</p>
-        </Grid>
+
+        <ShapeContext.Provider value={providerValue}>
+          <Grid item xs={8}>
+            <MapView />
+          </Grid>
+          <Grid item xs={4}>
+            <SidePanelMain />
+          </Grid>
+
+        </ShapeContext.Provider>
       </Grid>
     </div>
   );

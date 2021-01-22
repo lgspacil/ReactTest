@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHttp } from '../hooks/http';
+import { useHttp } from '../../hooks/http';
 import './CharPicker.css';
 
 interface People {
