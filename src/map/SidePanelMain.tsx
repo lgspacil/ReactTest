@@ -6,19 +6,6 @@ import { useParams } from 'react-router';
 
 const SidePanelMain = () => {
 
-    // getting the params in the link with react-router
-    // let id: string = ''
-    // const params = useParams<{ shapeId: string }>();
-    // const {shapeId} = useContext(ShapeContext);
-
-    // if(params.shapeId){
-    //     id = params.shapeId;
-    // }else{
-    //     id = shapeId
-    // }
-
-    // console.log('the id ', id)
-    
     const store = StoreContainer.useContainer();
     const {shapeId} = useContext(ShapeContext);
     const [acres, setAcres] = useState<null | number>(null)

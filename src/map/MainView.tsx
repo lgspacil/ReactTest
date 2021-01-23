@@ -24,17 +24,14 @@ const MainView = () => {
   return (
     <div className={classes.root}>
       <Grid container spacing={1}>
-
         <ShapeContext.Provider value={providerValue}>
           <Grid item xs={8}>
             <MapView />
           </Grid>
           <Grid item xs={4}>
             <SidePanelMain />
-
             <SidePanelDeepLink />
           </Grid>
-
         </ShapeContext.Provider>
       </Grid>
     </div>

@@ -3,9 +3,9 @@ import React, { useState } from 'react';
 import shortid from "shortid"
 import { Container, createContainer } from 'unstated-next'
 import { Feature, FeatureCollection } from '@turf/turf';
-import * as turf from '@turf/turf';
 import createPersistedState from 'use-persisted-state';
 
+// Create a unique key that will persist this data across tabs and windows.
 const useInputState = createPersistedState('input');
 const useNameState = createPersistedState('name');
 const useTodosState = createPersistedState('todos');
@@ -53,13 +53,11 @@ export const useStore = () => {
 
     const handleLogin = (cb: any) => {
         setUser(true);
-
         cb();
     }
 
     const handleLogout = (cb: any) => {
         setUser(false);
-
         cb();
     }
 
@@ -103,6 +101,7 @@ export const useStore = () => {
         setNum(number + 1);
     }
 
+    // the store container is exporting both methods and values to be accessed after
     return {
         input,
         name,

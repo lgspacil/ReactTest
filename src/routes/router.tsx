@@ -13,6 +13,7 @@ import BasicTable from '../GeneralComponents/BasicTable';
 
 const ToolRouter = () => {
 
+    // Importing global store container
     const store = StoreContainer.useContainer();
 
     return (

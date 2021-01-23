@@ -6,11 +6,7 @@ interface ReturnedData<T> {
 }
 
 export const useHttp = <FetchedData>(url: string, dependencies: any[]): ReturnedData<FetchedData> => {
-    const [fetchedData, setFetchedData] = useState<
-        ReturnedData<FetchedData>
-    >({
-        isLoading: true
-    });
+    const [fetchedData, setFetchedData] = useState<ReturnedData<FetchedData>>({isLoading: true});
 
     useEffect(() => {
         console.log('Sending HTTP Requests');

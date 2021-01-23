@@ -37,6 +37,7 @@ const SidePanelDeepLink = () => {
     const store = StoreContainer.useContainer();
     const [acres, setAcres] = useState<null | number>(null)
 
+    // Use effect runs the first time component renders as well as any time the dependecies change.
     useEffect(() => {
         if(id){
             if(store.featureCollection){

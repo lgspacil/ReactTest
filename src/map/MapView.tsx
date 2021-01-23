@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useMemo } from "react";
 import ReactMapboxGl from "react-mapbox-gl";
 import DrawControl from "react-mapbox-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { Feature } from "@turf/turf";
 import MapIcons from "./MapIcons";
 import { StoreContainer } from "../store";
 import MapPolygons from "./MapPolygons";
