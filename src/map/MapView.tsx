@@ -7,21 +7,33 @@ import MapIcons from "./MapIcons";
 import { StoreContainer } from "../store";
 import MapPolygons from "./MapPolygons";
 import { ShapeContext } from "../hooks/ShapeContext";
+import RedoUndo from './redoUndo';
+import { Feature, FeatureCollection } from "@turf/turf";
 
 const Map = ReactMapboxGl({
   accessToken:
     "pk.eyJ1IjoiZmFrZXVzZXJnaXRodWIiLCJhIjoiY2pwOGlneGI4MDNnaDN1c2J0eW5zb2ZiNyJ9.mALv0tCpbYUPtzT7YysA2g"
 });
-
 let drawControlRef: DrawControl | null = null; // ref to draw control
-
 type DrawType = 'draw_polygon' | 'direct_select' | 'draw_line_string' | 'simple_select';
+interface drawCreate {
+  features: Feature[];
+}
+
+const redoUndo = new RedoUndo;
 
 const MapView = () => {
 
   const store = StoreContainer.useContainer();
 
-  const {setShapeId} = useContext(ShapeContext);
+  const { setShapeId } = useContext(ShapeContext);
+
+  const getShapesAndDraw = () => {
+    const fc = drawControlRef?.draw.getAll();
+    redoUndo.setValue(fc);
+    console.log('---------------------- fc ------------ ', fc)
+    updateFeatureCollection(fc);
+  }
 
   const setDrawPolygon = () => {
     const currentMode: DrawType = drawControlRef?.draw.getMode();
@@ -39,16 +51,26 @@ const MapView = () => {
   const clearShape = () => {
     const ids = drawControlRef?.draw.getSelectedIds();
     drawControlRef?.draw.delete(ids);
-    updateFeatureCollection()
+    getShapesAndDraw()
   }
 
-  const updateFeatureCollection = () => {
-    const fc = drawControlRef?.draw.getAll();
-    store.updateFeatureCollection(fc);
+  const redo = () => {
+    const fc = redoUndo.redo();
+    console.log('what is the fc on redo', fc);
+    drawControlRef?.draw.set(fc);
+    updateFeatureCollection(fc);
+  }
+
+  const undo = () => {
+    const fc = redoUndo.undo();
+    console.log('what is the fc on undo', fc)
+    drawControlRef?.draw.set(fc);
+    updateFeatureCollection(fc);
   }
 
   const onLoadPrevShapes = () => {
-    if(store.featureCollection){
+    if (store.featureCollection) {
+      redoUndo.setPreviousShapes(store.featureCollection)
       drawControlRef?.draw.set(store.featureCollection);
     }
   }
@@ -56,6 +78,10 @@ const MapView = () => {
   const fieldSelectionUpdate = () => {
     const ids = drawControlRef?.draw.getSelectedIds();
     setShapeId(ids[0]);
+  }
+
+  const updateFeatureCollection = (fc: FeatureCollection | null) => {
+    store.updateFeatureCollection(fc);
   }
 
   const MapPolygonsComp = useMemo(() => { return <MapPolygons fc={store.featureCollection} /> }, [store.featureCollection])
@@ -71,14 +97,16 @@ const MapView = () => {
     >
       <DrawControl
         ref={(drawControl) => drawControlRef = drawControl}
-        onDrawCreate={updateFeatureCollection}
-        onDrawUpdate={updateFeatureCollection}
-        onDrawDelete={updateFeatureCollection}
+        onDrawCreate={getShapesAndDraw}
+        onDrawUpdate={getShapesAndDraw}
+        onDrawDelete={getShapesAndDraw}
         onDrawSelectionChange={fieldSelectionUpdate}
         controls={{ trash: false, combine_features: false, uncombine_features: false, point: false, line_string: false, polygon: false }}
       />
 
       <MapIcons
+        redo={redo}
+        undo={undo}
         add={() => store.add()}
         drawPolygon={setDrawPolygon}
         delete={clearShape}

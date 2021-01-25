@@ -28,7 +28,7 @@ interface IStore {
     handleTodo: (event: React.ChangeEvent<HTMLInputElement>) => void;
     handleSubmit: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     clearItems: () => void;
-    updateFeatureCollection: (fc: FeatureCollection) => void;
+    updateFeatureCollection: (fc: FeatureCollection | null) => void;
     featureCollection: FeatureCollection | null;
     user: boolean,
     handleLogout: (cb: any) => void;
@@ -89,7 +89,7 @@ export const useStore = () => {
         addTodo([]);
     }
 
-    const updateFeatureCollection = (fc: FeatureCollection) => {
+    const updateFeatureCollection = (fc: FeatureCollection | null) => {
         setFeatureCollection(fc)
     }
 
