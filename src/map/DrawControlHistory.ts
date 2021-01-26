@@ -1,10 +1,13 @@
 import { FeatureCollection } from "@turf/turf";
 import * as turf from '@turf/turf';
 
-class RedoUndo {
+class DrawControlHistory {
 
     private _history: FeatureCollection[] = [turf.featureCollection([])];
     private _position = 0;
+
+    public hasRedo = true;
+    public hasUndo = true;
 
     public setValue(fc: FeatureCollection) {
 
@@ -17,41 +20,54 @@ class RedoUndo {
 
         this._history.push(fc);
         this._position += 1;
-
-        console.log('History ', this._history)
-        console.log(`Position: ${this._position}, history: ${this._history}`)
+        this._checkRedoUndo();
     };
 
     public undo(): FeatureCollection {
-        console.log('going to undo position', this._position);
-        console.log('going to undo history', this._history);
+        let fc: FeatureCollection;
         if (this._position > 0) {
             this._position -= 1;
-            return this._history[this._position];
+            fc = this._history[this._position];
         } else {
-            return this._history[this._position];
+            fc = this._history[this._position];
         }
+
+        this._checkRedoUndo();
+        return fc;
     }
 
     public redo(): FeatureCollection {
+        let fc: FeatureCollection;
         if (this._position < this._history.length - 1) {
             this._position += 1;
-
-            return this._history[this._position];
+            fc = this._history[this._position];
         } else{
-            return this._history[this._history.length - 1]
+            fc = this._history[this._history.length - 1]
         }
-    }
 
-    public get position() {
-        return this._position;
+        this._checkRedoUndo();
+        return fc;
     }
 
     public setPreviousShapes = (fc: FeatureCollection) => {
-        console.log('setting previous shapes ', fc);
         this._history[0] = fc;
+    }
+
+    private _checkRedoUndo = () => {
+
+        if(this._position > 0){
+            this.hasUndo = false;
+        }else{
+            this.hasUndo = true;
+        }
+
+        // if(this._position < this._history.length){
+        //     this.hasRedo = false;
+        // }else{
+        //     this.hasRedo = true;
+        // }
     }
 
 }
 
-export default RedoUndo;
+export default DrawControlHistory;

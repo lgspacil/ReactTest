@@ -7,8 +7,8 @@ import MapIcons from "./MapIcons";
 import { StoreContainer } from "../store";
 import MapPolygons from "./MapPolygons";
 import { ShapeContext } from "../hooks/ShapeContext";
-import RedoUndo from './redoUndo';
-import { Feature, FeatureCollection } from "@turf/turf";
+import DrawControlHistory from './DrawControlHistory';
+import { FeatureCollection } from "@turf/turf";
 
 const Map = ReactMapboxGl({
   accessToken:
@@ -16,11 +16,9 @@ const Map = ReactMapboxGl({
 });
 let drawControlRef: DrawControl | null = null; // ref to draw control
 type DrawType = 'draw_polygon' | 'direct_select' | 'draw_line_string' | 'simple_select';
-interface drawCreate {
-  features: Feature[];
-}
 
-const redoUndo = new RedoUndo;
+
+const drawControlHistory = new DrawControlHistory;
 
 const MapView = () => {
 
@@ -30,7 +28,7 @@ const MapView = () => {
 
   const getShapesAndDraw = () => {
     const fc = drawControlRef?.draw.getAll();
-    redoUndo.setValue(fc);
+    drawControlHistory.setValue(fc);
     console.log('---------------------- fc ------------ ', fc)
     updateFeatureCollection(fc);
   }
@@ -55,22 +53,20 @@ const MapView = () => {
   }
 
   const redo = () => {
-    const fc = redoUndo.redo();
-    console.log('what is the fc on redo', fc);
+    const fc = drawControlHistory.redo();
     drawControlRef?.draw.set(fc);
     updateFeatureCollection(fc);
   }
 
   const undo = () => {
-    const fc = redoUndo.undo();
-    console.log('what is the fc on undo', fc)
+    const fc = drawControlHistory.undo();
     drawControlRef?.draw.set(fc);
     updateFeatureCollection(fc);
   }
 
   const onLoadPrevShapes = () => {
     if (store.featureCollection) {
-      redoUndo.setPreviousShapes(store.featureCollection)
+      drawControlHistory.setPreviousShapes(store.featureCollection)
       drawControlRef?.draw.set(store.featureCollection);
     }
   }

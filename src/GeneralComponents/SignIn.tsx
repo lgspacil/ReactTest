@@ -14,6 +14,11 @@ const SignIn = () => {
     const location = useLocation<LocationState>();
     const store = StoreContainer.useContainer();
 
+    const signIn = async () => {
+        await store.handleLogin();
+        routeAfterSignIn();
+    }
+
     const routeAfterSignIn = () => {
         if(location.state && location.state.from.pathname){
             history.push(location.state.from.pathname);
@@ -27,7 +32,7 @@ const SignIn = () => {
             <h1>Sign In</h1>
             <Button 
                 variant="contained" 
-                onClick={() => store.handleLogin(() => routeAfterSignIn()) }
+                onClick={signIn}
             >
                 Sign In
             </Button>

@@ -12,6 +12,9 @@ interface PrivateRouteProps extends RouteProps {
 
 const ProtectedRoute = (props: PrivateRouteProps) => {
     const { component: Component, user, ...rest } = props;
+
+    console.log('Protected')
+
     return (
         <Route
             {...rest}

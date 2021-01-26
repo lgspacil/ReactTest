@@ -144,7 +144,13 @@ const MiniDrawer: React.FunctionComponent = () => {
                 <List>
                     <ListItem button key={'Sign Out'}>
                         <Tooltip title={'Sign Out'} aria-label={'Sign Out'}>
-                        <ListItemIcon onClick={() => store.handleLogout(() => history.push('/signin'))}>
+                        <ListItemIcon 
+                            // onClick={() => store.handleLogout(() => history.push('/signin'))}
+                            onClick={ async () => {
+                                await store.handleLogout();
+                                history.push('/signin')
+                            }}
+                        >
                             <ExitToApp />
                         </ListItemIcon>
                         </Tooltip>

@@ -31,10 +31,14 @@ interface IStore {
     updateFeatureCollection: (fc: FeatureCollection | null) => void;
     featureCollection: FeatureCollection | null;
     user: boolean,
-    handleLogout: (cb: any) => void;
-    handleLogin: (cb: any) => void;
+    handleLogout: () => void;
+    handleLogin: () => void;
     clearFeatureCollection: () => void;
     add: () => void;
+}
+
+function delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
 }
 
 export const useStore = () => {
@@ -51,14 +55,14 @@ export const useStore = () => {
     const [user, setUser] = useUserState(false);
     const [number, setNum] = useState(1);
 
-    const handleLogin = (cb: any) => {
+    const handleLogin = async () => {
+        await delay(1000);
         setUser(true);
-        cb();
     }
 
-    const handleLogout = (cb: any) => {
+    const handleLogout = async () => {
+        await delay(1000);
         setUser(false);
-        cb();
     }
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
