@@ -16,9 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const MainView = () => {
   const classes = useStyles();
-
   const [shapeId, setShapeId] = useState('');
-
   const providerValue = useMemo(() => ({shapeId, setShapeId}), [shapeId, setShapeId]);
 
   return (

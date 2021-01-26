@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import TodoComponent from "../GeneralComponents/todo";
 import FormComponent from "../GeneralComponents/form";
 import About from "../GeneralComponents/About";
@@ -16,7 +16,7 @@ const ToolRouter = () => {
     // Importing global store container
     const store = StoreContainer.useContainer();
 
-    return (
+    return useMemo(() => (
         <div style={{ marginLeft: 72 }}>
             <Switch>
                 <Route exact path="/" component={Home} />
@@ -29,7 +29,7 @@ const ToolRouter = () => {
                 <Route exact path="/table" component={BasicTable} />
             </Switch>
         </div>
-    )
+    ), [store.user])
 }
 
 export default ToolRouter;
