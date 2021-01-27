@@ -9,24 +9,22 @@ import MapPolygons from "./MapPolygons";
 import { ShapeContext } from "../hooks/ShapeContext";
 import DrawControlHistory from './DrawControlHistory';
 import { FeatureCollection } from "@turf/turf";
-import {drawControlStyles} from './stylePolygons';
+import { drawControlStyles } from './stylePolygons';
+// const StaticMode  = require('@mapbox/mapbox-gl-draw-static-mode');
 
 const Map = ReactMapboxGl({
   accessToken:
     "pk.eyJ1IjoiZmFrZXVzZXJnaXRodWIiLCJhIjoiY2pwOGlneGI4MDNnaDN1c2J0eW5zb2ZiNyJ9.mALv0tCpbYUPtzT7YysA2g"
 });
 let drawControlRef: DrawControl | null = null; // ref to draw control
-type DrawType = 'draw_polygon' | 'direct_select' | 'draw_line_string' | 'simple_select';
+type DrawType = 'draw_polygon' | 'direct_select' | 'draw_line_string' | 'simple_select' | 'static';
 
 
 const drawControlHistory = new DrawControlHistory;
 
-const MapView = () => {
-
-  const [hasDelete, setHasDelete] = useState(false);
+const MapViewEdit = () => {
 
   const store = StoreContainer.useContainer();
-
   const { setShapeId } = useContext(ShapeContext);
 
   const getShapesAndDraw = () => {
@@ -100,7 +98,7 @@ const MapView = () => {
         onDrawUpdate={getShapesAndDraw}
         onDrawDelete={getShapesAndDraw}
         onDrawSelectionChange={fieldSelectionUpdate}
-        controls={{ trash: false, combine_features: false, uncombine_features: false, point: false, line_string: false, polygon: false }}
+        displayControlsDefault={false}
       />
 
       <MapIcons
@@ -118,4 +116,4 @@ const MapView = () => {
   );
 }
 
-export default MapView;
+export default MapViewEdit;

@@ -6,7 +6,7 @@ import DeleteSharp from '@material-ui/icons/DeleteSharp';
 import AddOutlined from '@material-ui/icons/AddOutlined';
 import Undo from '@material-ui/icons/Undo';
 import Redo from '@material-ui/icons/Redo';
-import { Tooltip } from '@material-ui/core';
+import { Switch, Tooltip } from '@material-ui/core';
 
 interface Props {
   drawPolygon: () => void;
