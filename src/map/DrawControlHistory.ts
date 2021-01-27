@@ -6,8 +6,8 @@ class DrawControlHistory {
     private _history: FeatureCollection[] = [turf.featureCollection([])];
     private _position = 0;
 
-    public hasRedo = true;
-    public hasUndo = true;
+    public hasRedo = false;
+    public hasUndo = false;
 
     public setValue(fc: FeatureCollection) {
 
@@ -56,16 +56,16 @@ class DrawControlHistory {
     private _checkRedoUndo = () => {
 
         if(this._position > 0){
-            this.hasUndo = false;
-        }else{
             this.hasUndo = true;
+        }else{
+            this.hasUndo = false;
         }
 
-        // if(this._position < this._history.length){
-        //     this.hasRedo = false;
-        // }else{
-        //     this.hasRedo = true;
-        // }
+        if(this._position < this._history.length -1){
+            this.hasRedo = true;
+        }else{
+            this.hasRedo = false;
+        }
     }
 
 }

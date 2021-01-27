@@ -14,6 +14,8 @@ interface Props {
   add: () => void;
   undo: () => void;
   redo: () => void;
+  hasRedo: boolean;
+  hasUndo: boolean;
 }
 
 const useStyles = makeStyles(() =>
@@ -32,7 +34,7 @@ const useStyles = makeStyles(() =>
       margin: 0,
       top: 'auto',
       right: 20,
-      bottom: 90,
+      bottom: 70,
       left: 'auto',
       position: 'absolute',
     },
@@ -41,7 +43,7 @@ const useStyles = makeStyles(() =>
       margin: 0,
       top: 'auto',
       right: 20,
-      bottom: 160,
+      bottom: 120,
       left: 'auto',
       position: 'absolute',
     },
@@ -50,7 +52,7 @@ const useStyles = makeStyles(() =>
       margin: 0,
       top: 'auto',
       right: 20,
-      bottom: 230,
+      bottom: 170,
       left: 'auto',
       position: 'absolute',
     },
@@ -59,7 +61,7 @@ const useStyles = makeStyles(() =>
       margin: 0,
       top: 'auto',
       right: 20,
-      bottom: 300,
+      bottom: 220,
       left: 'auto',
       position: 'absolute',
     }
@@ -72,27 +74,27 @@ const MapIcons: React.FunctionComponent<Props> = (props: Props) => {
 
   return (
     <>
-      <Fab color="primary" aria-label="add" className={classes.fab1} onClick={props.drawPolygon}>
+      <Fab size="small" color="primary" aria-label="add" className={classes.fab1} onClick={props.drawPolygon}>
         <Tooltip title={'Draw Polygon'}>
           <CropFreeSharp />
         </Tooltip>
       </Fab>
-      <Fab color="primary" aria-label="add" className={classes.fab2} onClick={props.delete}>
+      <Fab size="small" color="primary" aria-label="add" className={classes.fab2} onClick={props.delete}>
         <Tooltip title={'Delte'}>
           <DeleteSharp />
         </Tooltip>
       </Fab>
-      <Fab color="primary" aria-label="add" className={classes.fab3} onClick={props.add}>
+      <Fab size="small" color="primary" aria-label="add" className={classes.fab3} onClick={props.add}>
         <Tooltip title={'Add Number'}>
           <AddOutlined />
         </Tooltip>
       </Fab>
-      <Fab color="primary" aria-label="add" className={classes.fab4} onClick={props.undo}>
+      <Fab size="small" color="primary" disabled={!props.hasUndo} aria-label="add" className={classes.fab4} onClick={props.undo}>
         <Tooltip title={'Undo'}>
           <Undo />
         </Tooltip>
       </Fab>
-      <Fab color="primary" aria-label="add" className={classes.fab5} onClick={props.redo}>
+      <Fab size="small" color="primary" disabled={!props.hasRedo} aria-label="add" className={classes.fab5} onClick={props.redo}>
         <Tooltip title={'Redo'}>
           <Redo />
         </Tooltip>

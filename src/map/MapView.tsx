@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from "react";
+import React, { useContext, useMemo, useState } from "react";
 import ReactMapboxGl from "react-mapbox-gl";
 import DrawControl from "react-mapbox-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
@@ -9,6 +9,7 @@ import MapPolygons from "./MapPolygons";
 import { ShapeContext } from "../hooks/ShapeContext";
 import DrawControlHistory from './DrawControlHistory';
 import { FeatureCollection } from "@turf/turf";
+import {drawControlStyles} from './stylePolygons';
 
 const Map = ReactMapboxGl({
   accessToken:
@@ -22,6 +23,8 @@ const drawControlHistory = new DrawControlHistory;
 
 const MapView = () => {
 
+  const [hasDelete, setHasDelete] = useState(false);
+
   const store = StoreContainer.useContainer();
 
   const { setShapeId } = useContext(ShapeContext);
@@ -29,7 +32,6 @@ const MapView = () => {
   const getShapesAndDraw = () => {
     const fc = drawControlRef?.draw.getAll();
     drawControlHistory.setValue(fc);
-    console.log('---------------------- fc ------------ ', fc)
     updateFeatureCollection(fc);
   }
 
@@ -92,6 +94,7 @@ const MapView = () => {
       }}
     >
       <DrawControl
+        styles={drawControlStyles()}
         ref={(drawControl) => drawControlRef = drawControl}
         onDrawCreate={getShapesAndDraw}
         onDrawUpdate={getShapesAndDraw}
@@ -101,6 +104,8 @@ const MapView = () => {
       />
 
       <MapIcons
+        hasRedo={drawControlHistory.hasRedo}
+        hasUndo={drawControlHistory.hasUndo}
         redo={redo}
         undo={undo}
         add={() => store.add()}
