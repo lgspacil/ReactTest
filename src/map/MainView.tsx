@@ -28,7 +28,7 @@ const MainView = () => {
       <Grid container spacing={1}>
         <ShapeContext.Provider value={providerValue}>
           <Grid item xs={8}>
-            {allowEdit ? <MapViewEdit /> : null}
+            <MapViewEdit />
           </Grid>
           <Grid item xs={4}>
             <SidePanelMain />

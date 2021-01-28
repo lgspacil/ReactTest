@@ -3,19 +3,11 @@ import React, { useState } from 'react';
 import shortid from "shortid"
 import { Container, createContainer } from 'unstated-next'
 import { Feature, FeatureCollection } from '@turf/turf';
-import createPersistedState from 'use-persisted-state';
-
-// Create a unique key that will persist this data across tabs and windows.
-const useInputState = createPersistedState('input');
-const useNameState = createPersistedState('name');
-const useTodosState = createPersistedState('todos');
-const useItemState = createPersistedState('item');
-const useFeatureCollection = createPersistedState('fc');
-const useUserState = createPersistedState('user');
+import useLocalStorageState from 'use-local-storage-state' // another persisted option
 
 interface IList {
     id: string;
-    title: string;
+    name: string;
 }
 
 interface IStore {
@@ -42,18 +34,19 @@ function delay(ms: number) {
 }
 
 export const useStore = () => {
-    // Construct a list that contains two default tasks
     const list: IList[] = [
-        { id: '1', title: 'Write code' },
-        { id: '2', title: 'Buy milk' }
+        { id: '1', name: 'Write code' },
+        { id: '2', name: 'Buy milk' }
     ]
-    const [input, setValue] = useInputState("");
-    const [name, setName] = useNameState("James");
-    const [todos, addTodo] = useTodosState(list);
-    const [item, setTodo] = useItemState("");
-    const [featureCollection, setFeatureCollection] = useFeatureCollection<FeatureCollection | null>(null);
-    const [user, setUser] = useUserState(false);
-    const [number, setNum] = useState(1);
+    const [input, setValue] = useLocalStorageState("input", "");
+    const [name, setName] = useLocalStorageState("name", "James");
+    const [item, setTodo] = useLocalStorageState("item", "");
+    const [featureCollection, setFeatureCollection] = useLocalStorageState<FeatureCollection | null>("featureCollection", null);
+    const [user, setUser] = useLocalStorageState("user", false);
+    const [number, setNum] = useLocalStorageState('number', 1);
+    const [todos, addTodo] = useLocalStorageState('todos', list)
+
+
 
     const handleLogin = async () => {
         await delay(1000);
@@ -62,7 +55,18 @@ export const useStore = () => {
 
     const handleLogout = async () => {
         await delay(1000);
+        clearLocalStorage()
         setUser(false);
+    }
+
+    const clearLocalStorage = () => {
+        setValue.reset();
+        setName.reset();
+        setTodo.reset();
+        setFeatureCollection.reset();
+        setUser.reset();
+        setNum.reset();
+        addTodo.reset();
     }
 
     const handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,7 +87,7 @@ export const useStore = () => {
         event.preventDefault();
         const value = {
             id: shortid.generate(),
-            title: item
+            name: item
         }
         addTodo(todos.concat(value));
         setTodo("");

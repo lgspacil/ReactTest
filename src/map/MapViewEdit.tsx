@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useState } from "react";
 import ReactMapboxGl from "react-mapbox-gl";
 import DrawControl from "react-mapbox-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
@@ -25,7 +25,11 @@ const drawControlHistory = new DrawControlHistory;
 const MapViewEdit = () => {
 
   const store = StoreContainer.useContainer();
-  const { setShapeId } = useContext(ShapeContext);
+  const { setShapeId, allowEdit } = useContext(ShapeContext);
+
+  useEffect(() => {
+    onLoadPrevShapes();
+  }, [allowEdit])
 
   const getShapesAndDraw = () => {
     const fc = drawControlRef?.draw.getAll();
@@ -80,6 +84,7 @@ const MapViewEdit = () => {
     store.updateFeatureCollection(fc);
   }
 
+  
   const MapPolygonsComp = useMemo(() => { return <MapPolygons fc={store.featureCollection} /> }, [store.featureCollection])
 
   return (
@@ -91,7 +96,7 @@ const MapViewEdit = () => {
         width: '100%'
       }}
     >
-      <DrawControl
+      {allowEdit ? <DrawControl
         styles={drawControlStyles()}
         ref={(drawControl) => drawControlRef = drawControl}
         onDrawCreate={getShapesAndDraw}
@@ -99,7 +104,7 @@ const MapViewEdit = () => {
         onDrawDelete={getShapesAndDraw}
         onDrawSelectionChange={fieldSelectionUpdate}
         displayControlsDefault={false}
-      />
+      /> : <div /> }
 
       <MapIcons
         hasRedo={drawControlHistory.hasRedo}

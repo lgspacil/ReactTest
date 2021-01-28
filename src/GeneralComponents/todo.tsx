@@ -42,10 +42,11 @@ const TodoComponent: React.FunctionComponent = () => {
         <div className={classes.demo}>
           <List dense={true}>
             {todo.todos ? todo.todos.map((item) => {
+              console.log('the item ', item)
               return (
                 <ListItem key={item.id}>
                   <ListItemText
-                    primary={item.title}
+                    primary={item.name}
                   />
                 </ListItem>
               );
