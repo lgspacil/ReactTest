@@ -11,9 +11,9 @@ export const drawControlStyles = () => {
               "line-join": "round"
             },
             "paint": {
-              "line-color": "green",
-            //   "line-dasharray": [0.2, 2],
-              "line-width": 2
+              "line-color": "orange",
+              "line-dasharray": [0.2, 2],
+              "line-width": 3
             }
         },
         // polygon fill
@@ -22,7 +22,7 @@ export const drawControlStyles = () => {
           "type": "fill",
           "filter": ["all", ["==", "$type", "Polygon"], ["!=", "mode", "static"]],
           "paint": {
-            "fill-color": "green",
+            "fill-color": "black",
             "fill-outline-color": "white",
             "fill-opacity": 0.1
           }
@@ -38,9 +38,9 @@ export const drawControlStyles = () => {
             "line-join": "round"
           },
           "paint": {
-            "line-color": "green",
-            // "line-dasharray": [0.2, 2],
-            "line-width": 2
+            "line-color": "orange",
+            "line-dasharray": [0.2, 2],
+            "line-width": 3
           }
         },
         // vertex point halos
@@ -84,8 +84,8 @@ export const drawControlStyles = () => {
           type: 'circle',
           filter: ['all', ['==', '$type', 'Point'], ['==', 'meta', 'midpoint']],
           paint: {
-              'circle-radius': 5,
-              'circle-color': 'white',
+              'circle-radius': 3,
+              'circle-color': 'blue',
           },
       },
         // // polygon fill
