@@ -4,6 +4,7 @@ import shortid from "shortid"
 import { Container, createContainer } from 'unstated-next'
 import { Feature, FeatureCollection } from '@turf/turf';
 import useLocalStorageState from 'use-local-storage-state' // another persisted option
+import {config} from './config';
 
 interface IList {
     id: string;
@@ -27,6 +28,8 @@ interface IStore {
     handleLogin: () => void;
     clearFeatureCollection: () => void;
     add: () => void;
+    storeVersion: number;
+    updateStoreVersion: () => void;
 }
 
 function delay(ms: number) {
@@ -44,12 +47,16 @@ export const useStore = () => {
     const [featureCollection, setFeatureCollection] = useLocalStorageState<FeatureCollection | null>("featureCollection", null);
     const [user, setUser] = useLocalStorageState("user", false);
     const [number, setNum] = useLocalStorageState('number', 1);
-    const [todos, addTodo] = useLocalStorageState('todos', list)
+    const [todos, addTodo] = useLocalStorageState('todos', list);
+    const [storeVersion, setStoreVersion] = useLocalStorageState('storeVersion', config.version);
 
-
+    const updateStoreVersion = () => {
+        setStoreVersion(config.version)
+    }
 
     const handleLogin = async () => {
         await delay(1000);
+        setStoreVersion(config.version);
         setUser(true);
     }
 
@@ -60,6 +67,7 @@ export const useStore = () => {
     }
 
     const clearLocalStorage = () => {
+        setStoreVersion.reset();
         setValue.reset();
         setName.reset();
         setTodo.reset();
@@ -127,6 +135,8 @@ export const useStore = () => {
         handleLogout,
         clearFeatureCollection,
         add, // delete after test
+        updateStoreVersion,
+        storeVersion
     };
 }
 export const StoreContainer: Container<IStore, void> = createContainer(useStore);

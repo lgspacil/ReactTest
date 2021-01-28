@@ -10,11 +10,19 @@ import ProtectedRoute from './ProtectedRoute';
 import { StoreContainer } from '../store';
 import Home from '../GeneralComponents/Home';
 import BasicTable from '../GeneralComponents/BasicTable';
+import { config } from '../config';
 
 const ToolRouter = () => {
 
     // Importing global store container
     const store = StoreContainer.useContainer();
+
+    useEffect(() => {
+        if(config.version !== store.storeVersion){
+            console.log('we have a problem');
+            store.handleLogout();
+        }
+    })
 
     return useMemo(() => (
         <div style={{ marginLeft: 72 }}>

@@ -14,7 +14,7 @@ import { drawControlStyles } from './stylePolygons';
 
 const Map = ReactMapboxGl({
   accessToken:
-    "pk.eyJ1IjoiZmFrZXVzZXJnaXRodWIiLCJhIjoiY2pwOGlneGI4MDNnaDN1c2J0eW5zb2ZiNyJ9.mALv0tCpbYUPtzT7YysA2g"
+    "pk.eyJ1Ijoid2RpbW1pdCIsImEiOiJjamxvMnNpeWkxcGZrM3FteHY3bDA4dzZxIn0.BDKWMnntUq8M3HVsnIlvbw"
 });
 let drawControlRef: DrawControl | null = null; // ref to draw control
 type DrawType = 'draw_polygon' | 'direct_select' | 'draw_line_string' | 'simple_select' | 'static';
