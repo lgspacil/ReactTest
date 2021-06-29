@@ -10,6 +10,7 @@ import ProtectedRoute from './ProtectedRoute';
 import { StoreContainer } from '../store';
 import Home from '../GeneralComponents/Home';
 import BasicTable from '../GeneralComponents/BasicTable';
+import ImageComponent from '../GeneralComponents/ImageComponent';
 import { config } from '../config';
 
 const ToolRouter = () => {
@@ -35,6 +36,7 @@ const ToolRouter = () => {
                 <ProtectedRoute exact path='/about' user={store.user} component={About} />
                 <Route exact path="/signIn" component={SignIn} />
                 <Route exact path="/table" component={BasicTable} />
+                <Route exact path="/image" component={ImageComponent} />
             </Switch>
         </div>
     ), [store.user])

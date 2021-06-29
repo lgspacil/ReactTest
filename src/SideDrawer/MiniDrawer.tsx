@@ -22,6 +22,7 @@ import HomeOutlined from "@material-ui/icons/HomeOutlined";
 import ListAlt from "@material-ui/icons/ListAlt";
 import Info from "@material-ui/icons/Info";
 import TableChart from "@material-ui/icons/TableChart";
+import ImageIcon from "@material-ui/icons/Image";
 import FormatAlignJustify from "@material-ui/icons/FormatAlignJustify";
 import { Tooltip } from "@material-ui/core";
 import { StoreContainer } from "../store";
@@ -84,6 +85,7 @@ const navLinks = [
     { title: `To Do List`, path: `/todo`, icon: <ListAlt /> },
     { title: `about`, path: `/about`, icon: <Info /> },
     { title: `Table`, path: `/table`, icon: <TableChart /> },
+    { title: `Image Render`, path: `/image`, icon: <ImageIcon /> },
 ];
 
 const MiniDrawer: React.FunctionComponent = () => {
