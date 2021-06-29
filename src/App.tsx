@@ -3,6 +3,8 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import ToolRouter from './routes/router';
 import MiniDrawer from './SideDrawer/MiniDrawer';
 
+// ---------------------- hello -------------
+
 // Router wrapping both the Drawer and the routes since we want access to use history in the drawer component
 
 const App: React.FunctionComponent<{}> = () => {
